@@ -1,0 +1,284 @@
+\documentclass{beamer}
+\usepackage{listings}
+\lstset{
+%language=C,
+frame=single, 
+breaklines=true,
+columns=fullflexible
+}
+\usepackage{subcaption}
+\usepackage{url}
+\usepackage{tikz}
+\usepackage{tkz-euclide} % loads  TikZ and tkz-base
+%\usetkzobj{all}
+\usetikzlibrary{calc,math}
+\usepackage{float}
+\newcommand\norm[1]{\left\lVert#1\right\rVert}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\usepackage[export]{adjustbox}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usetheme{Boadilla}
+\providecommand{\pr}[1]{\ensuremath{\Pr\left(#1\right)}}
+\usepackage{mathtools}
+
+\title{UGC/MATH 2018 (June set-a)-Q.106}
+\author{T.Rohan - CS20BTECH11064}
+\date{21st May, 2021}
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{Question}
+
+\begin{block}{}
+ Let ${X_i}$, ${i \geq 1}$, be a sequence of i.i.d. random variables with $E(X_i)=0$ and $V(X_i)=1$. Which of the following are true?
+\vspace{0.2cm}
+\begin{enumerate}
+    \item $\dfrac{1}{n} \sum_{i=1}^n X_i^2 \to 0$ in probability 
+    \item $\dfrac{1}{n^{3/4}} \sum_{i=1}^n X_i \to 0$ in probability 
+    \item $\dfrac{1}{n^{1/2}} \sum_{i=1}^n X_i \to 0$ in probability 
+    \item $\dfrac{1}{n} \sum_{i=1}^n X_i^2 \to 1$ in probability
+\end{enumerate}
+\end{block}
+\end{frame}
+\begin{frame}{}
+\frametitle{Definitions}
+
+\begin{definition} \label{def1}
+    A sequence of random variables $Y$, $Y_1$, $Y_2 \ldots$   converges in distribution to a random variable $Y$, if
+    \begin{align}
+        \lim_{n \to \infty}F_{Y_{n}} (a) = F_{Y} (a)  \text{  }\forall a \in \mathbb{R}.
+    \end{align}
+\end{definition}
+\begin{definition} \label{def2}
+    A sequence of random variables $Y$, $Y_1$, $Y_2 \ldots$ is said to converge in probability to $Y$, if
+    \begin{align}
+        \lim_{n \to \infty}\pr{\abs{Y_n - Y} > \epsilon} = 0  \text{  }\forall \epsilon > 0.
+    \end{align}
+\end{definition}
+
+\end{frame}
+
+\begin{frame}{Lemmas}
+\begin{lemma}\label{lma1}
+    If
+    \begin{math}
+    {Y_n} \to Y \text{ in probability, }{Y_n} \to Y \text{ in distribution.}
+    \end{math}
+\end{lemma}
+
+\begin{block}{Strong Law of Large Numbers}\label{lma3} 
+Let $X_1$, $X_2$, \ldots $X_n$ be i.i.d. random variables with expected value $E(X_i)=\mu < \infty$, then,
+\begin{align}
+    \lim_{n \to \infty}\pr{\left|\dfrac{1}{n}\sum_{i=1}^n X_i - \mu \right|\geq \epsilon}=0
+\end{align}
+Or, 
+\begin{math}
+    \dfrac{1}{n}\sum_{i=1}^n X_i
+\end{math}
+converges in probability to $\mu$.
+\end{block}
+\end{frame}
+
+\begin{frame}{}
+    \begin{lemma} \label{lmaconda}
+    If $X_i$ is a sequence of i.i.d. random variables, satisfying condition
+    \begin{align}
+        F_{X_1}(x)=F_{X_2}(x)&=\ldots=F_{X_n}(x)=F_X(x)
+    \end{align}
+    then,
+    \begin{align}
+        F_{X_1^2}(x)=F_{X_2^2}(x)=\ldots=F_{X_n^2}(x)=F_{X^2}(x)
+    \end{align}
+    $\forall x \in \mathbb{R}$ where $F_{X}(x)$ is the c.d.f. of $X_i$.
+\end{lemma}
+\begin{block}{Proof}
+${X_i}$ is a sequence of i.i.d. random variables, which means it satisfies the following condition.
+\begin{align}
+        F_{X_1}(x)=F_{X_2}(x)&=\ldots=F_{X_n}(x)=F_X(x) \label{maincondA}
+\end{align}
+\end{block}
+\end{frame}
+\begin{frame}
+\begin{block}{Proof contd.}
+Let $Y_i=X_i^2$. For $y \geq 0$,
+\begin{align}
+    F_{Y_i}(y)&=\pr{Y_i \leq y}=\pr{X_i^2 \leq y}\\
+    \implies F_{Y_i}(y)&=\pr{-\sqrt{y} \leq X_i \leq \sqrt{y}}\label{eqref}\\
+    \implies F_{Y_i}(y)&=\pr{X_i \leq \sqrt{y}}-\pr{X_i \leq-\sqrt{y}}=F_{X_i}(\sqrt{y})-F_{X_i}(-\sqrt{y})
+\end{align}
+Using \eqref{maincondA},
+\begin{align} 
+    F_{Y_i}(y)&=F_X(\sqrt{y})-F_X(-\sqrt{y})\label{eqY}
+\end{align}
+From \eqref{eqY},
+\begin{align} 
+    F_{Y_1}(y)=F_{Y_2}(y)=\ldots=F_{Y_n}(y)=F_Y(y)\label{condnA}
+\end{align}
+where $F_Y(y)$ is the c.d.f. of $Y_i=X_i^2$.
+\end{block}
+\end{frame}
+\begin{frame}{}
+\begin{lemma} \label{lmacondb}
+    If $X_i$ is a sequence of i.i.d. random variables, satisfying condition
+    \begin{align}
+        F_{X_1,\ldots X_n}(x_1\ldots x_n)&=F_X(x_1)F_X(x_2)\ldots F_X(x_n)\label{maincondnB}
+    \end{align} 
+    where $F_{X}(x)$ is the c.d.f. of $X_i$, then for $Y_i = X_i^2$
+    \begin{align}
+    F_{Y_1,Y_2,\dots,Y_n}&(y_1,y_2,\dots,y_n)=F_Y(y_1)F_Y(y_1)\dots F_Y(y_n)
+    \end{align}
+    where $F_Y(y)$ is the c.d.f. of $Y_i=X_i^2$.
+\end{lemma}
+\begin{block}{Proof}
+Let $Y_i = X_i^2$.
+Now, for $y_i\geq0$, consider
+
+\begin{math}
+    F_{Y_1,Y_2,\ldots,Y_n}(y_1,y_2,\ldots,y_n)=\pr{Y_1 \leq y_1,Y_2 \leq y_2,\ldots,Y_n \leq y_n}
+\end{math}
+\begin{align}
+    &=\pr{X_1^2 \leq y_1,\ldots,X_n^2 \leq y_n}\\
+    &=\pr{-\sqrt{y_1} \leq X_1 \leq \sqrt{y_1},\ldots,-\sqrt{y_n} \leq X_n \leq \sqrt{y_n}}
+\end{align}
+\end{block}
+\end{frame}
+
+\begin{frame}{}
+\begin{block}{Proof contd.}
+   Since $X_1,X_2,\ldots,X_n$ are independent,
+    \begin{align}
+        &F_{Y_1,Y_2,\dots,Y_n}(y_1,y_2,\dots,y_n)= \nonumber\\
+        &\pr{-\sqrt{y_1} \leq X_1 \leq \sqrt{y_1}} \pr{-\sqrt{y_2} \leq X_2 \leq \sqrt{y_2}} \nonumber\\
+        &\hspace{2cm} \dots \pr{-\sqrt{y_n} \leq X_n \leq \sqrt{y_n}}
+    \end{align}
+    From \eqref{eqref} and \eqref{condnA},
+    \begin{align}
+        F_{Y_1,Y_2,\dots,Y_n}(y_1,y_2,\dots,y_n)&=F_{Y_1}(y_1) F_{Y_2}(y_2)\dots F_{Y_n}(y_n)\\
+        &=F_Y(y_1) F_Y(y_2) \dots F_Y(y_n)
+    \end{align}
+    So,
+    \begin{align} \label{condnB}
+        F_{Y_1,Y_2,\dots,Y_n}&(y_1,y_2,\dots,y_n)=F_Y(y_1)F_Y(y_1)\dots F_Y(y_n)
+    \end{align}
+\end{block}
+\end{frame}
+\begin{frame}{Some other lemmas}
+\begin{lemma} \label{xi2lma}
+If ${X_i}$ is a sequence of i.i.d. random variables, it follows that $X_i^2$ is also a sequence of i.i.d. random variables.
+\end{lemma}
+\begin{proof}
+    From Lemma \ref{lmaconda} and Lemma \ref{lmacondb}, $X_i^2$ is also a sequence of i.i.d. random variables.
+\end{proof}
+
+\begin{lemma} \label{varsum}
+    If $X_1, X_2, \ldots X_n$ are independent random variables,
+    \begin{align}
+        V (\sum_{i=1}^n X_i) = \sum_{i=1}^n V(X_i)
+    \end{align}
+\end{lemma}
+\end{frame}
+
+\begin{frame}{}
+\begin{block}{Chebyshev's Inequality}\label{lma4}
+   Let the random variable $X$ have a finite mean $\mu$ and a finite variance $\sigma^2$. For every $\epsilon>0$, 
+\begin{align}
+    \pr{\abs{X - \mu} \geq \epsilon} \leq \frac{\sigma^2}{\epsilon^2}
+\end{align}
+\end{block}
+\end{frame}
+\begin{frame}
+\begin{block}{Central Limit Theorem}\label{lma2}
+Let $X_1$, $X_2$, \ldots $X_n$ be i.i.d.r.v with $E(X_i)=\mu$  and $V(X_i)=\sigma^2$. Then
+\begin{align}
+    Z_n = \frac{\bar{x} - \mu}{\frac{\sigma}{\sqrt{n}}} = \frac{\sum_{i=1}^n X_i - n\mu}{\sqrt{n}\sigma}
+\end{align}
+converges in distribution to standard normal random variable as n $\to \infty$
+\begin{align}
+    \lim_{n \to \infty}\pr{Z_n \leq a} = \Phi(a)   \text{        }\forall a \in \mathbb{R}.
+\end{align}
+where $\Phi(a)$ is the standard normal CDF.
+\end{block}
+\end{frame}
+\begin{frame}{Option 1}
+From Lemma \ref{xi2lma}, \{$X_i^2$\} is a sequence of i.i.d. random variables.
+Now, we know,
+\begin{align}
+    E(X_i^2)=V(X_i)+(E(X_i))^2
+\end{align}
+Putting given values, we get,
+\begin{align} 
+    E(X_i^2)&=1 \label{muval}
+\end{align}
+
+From Lemma \ref{lma3},  
+\begin{align} \label{opt4}
+   \dfrac{1}{n}\sum_{i=1}^n X_i^2 \to 1
+\end{align}
+
+Therefore, option 1 is incorrect.
+\end{frame}
+
+\begin{frame}{Option 2}
+\begin{lemma} \label{result2}
+   If \{$X_i$\} is a sequence of i.i.d. random variables with $E(X_i)=0$ and $V(X_i)=1$, then the random variable \begin{math} Y_n=\dfrac{1}{n^{3/4}}\sum_{i=1}^n X_i.\end{math} has \begin{math} E(Y_n) = 0 \text{ and } V(Y_n) = \dfrac{1}{n^{1/2}} \end{math}
+\end{lemma}
+
+\begin{block}{Proof}
+\begin{align}
+    E(Y_n) &= \dfrac{1}{n^{3/4}}E\brak{\sum_{i=1}^n X_i} = 0
+\end{align}
+Since $E(X_i) = 0$. Now,
+\begin{math}
+    V(Y_n) = V\brak{\dfrac{1}{n^{3/4}}\sum_{i=1}^n X_i} = \dfrac{1}{n^{3/2}} V\brak{\sum_{i=1}^n X_i}
+\end{math}
+\end{block}
+
+\end{frame}
+
+\begin{frame}{}
+\begin{block}{Proof contd.}
+From Lemma \ref{varsum}, and since $V(X_i)=1$, 
+\begin{align}
+    \implies V(Y_n) &= \dfrac{1}{n^{3/2}} \times n = \dfrac{1}{n^{1/2}}
+\end{align}
+\end{block}
+Now, from Lemma \ref{lma4} and from Lemma \ref{result2}
+\begin{align}
+    &\lim_{n \to \infty}\pr{|Y_n-0|\geq \epsilon} \leq \lim_{n \to \infty }\dfrac{1}{n^{1/2}\epsilon^2}\brak{=0}\\
+    \implies &\lim_{n \to \infty}\pr{\left | \dfrac{1}{n^{3/4}}\sum_{i=1}^n X_i - 0 \right|\geq \epsilon}=0
+\end{align}
+From Definition \ref{def2},
+\begin{align}
+    \dfrac{1}{n^{3/4}}\sum_{i=1}^n X_i \to 0
+\end{align}
+Thus, option 2 is correct.
+\end{frame}
+\begin{frame}{Option 3}
+Writing the random variable $Z_n$ from Lemma \ref{lma2} for \{$X_i$\} where $\mu=0$ and $\sigma=1$,
+\begin{align}
+    Z_n &= \dfrac{1}{n^{1/2}} \sum_{i=1}^n X_i
+\end{align}
+
+From Lemma \ref{lma2} 
+\begin{align}
+    \dfrac{1}{n^{1/2}} \sum_{i=1}^n X_i \to  N(0,1)
+\end{align}
+whereas the option states that
+\begin{align}
+ \dfrac{1}{n^{1/2}} \sum_{i=1}^n X_i \to 0
+\end{align} 
+from Lemma \ref{lma1}.
+
+Therefore, option 3 is incorrect.
+\end{frame}
+\begin{frame}{Option 4}
+From \eqref{opt4}, option 4 is correct.
+
+Therefore, options 2 and 4 are correct.
+\end{frame}
+\end{document}
